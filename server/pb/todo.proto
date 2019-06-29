@@ -1,0 +1,39 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package todo;
+
+
+message Item {
+    string ID = 1;
+    string Description = 2;
+    google.protobuf.Timestamp Due = 3;
+    google.protobuf.Timestamp Created = 4;
+    int32 HoursToComplete = 5;
+}
+
+message Items {
+    repeated Item Items = 1;
+    int32 Total = 2;
+    int32 Limit = 3;
+    int32 Offset = 4;
+}
+
+message ID {
+    string ID = 1;
+}
+
+message Pagination {
+    int32 Limit = 1;
+    int32 Offset = 2;
+}
+
+message Empty {
+
+}
+
+service Todo {
+    rpc UpsertItem (Item) returns (ID);
+    rpc GetItems (Pagination) returns (Items);
+    rpc GetItem (ID) returns (Item);
+    rpc RemoveItem (ID) returns (Empty);
+}

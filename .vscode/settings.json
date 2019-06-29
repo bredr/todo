@@ -1,0 +1,11 @@
+{
+    "go.useLanguageServer": true,
+    "go.buildOnSave": "workspace",
+    "go.alternateTools": {
+        "go-langserver": "gopls",
+    },
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true
+    }
+}
