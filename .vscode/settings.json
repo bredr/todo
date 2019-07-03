@@ -7,5 +7,18 @@
     "go.languageServerExperimentalFeatures": {
         "format": true,
         "autoComplete": true
-    }
+    },
+    "go.formatTool": "gofmt",
+    "[go]": {
+        "editor.snippetSuggestions": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "editor.codeActionsOnSaveTimeout": 3000
+    },
+    "files.eol": "\n",
+    "gopls": {
+        "usePlaceholders": true // add parameter placeholders when completing a function
+    },
 }

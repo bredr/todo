@@ -1,9 +1,9 @@
 package router
 
 import (
-	pb "github.com/bredr/todo/pb"
 	"context"
 	"errors"
+	pb "github.com/bredr/todo/pb"
 	"github.com/google/uuid"
 	"log"
 )
@@ -12,7 +12,7 @@ type Router struct {
 	Items []*pb.Item
 }
 
-var _  pb.TodoServer = &Router{}
+var _ pb.TodoServer = &Router{}
 
 func (r *Router) GetItem(ctx context.Context, req *pb.ID) (*pb.Item, error) {
 	log.Printf("GetItem::%v", req)
@@ -38,10 +38,10 @@ func (r *Router) GetItems(ctx context.Context, req *pb.Pagination) (*pb.Items, e
 
 func (r *Router) RemoveItem(ctx context.Context, req *pb.ID) (*pb.Empty, error) {
 	log.Printf("RemoveItem::%v", req)
-	new := r.Items[:0]
-	for i, v := range r.Items {
+	var new []*pb.Item
+	for _, v := range r.Items {
 		if v.ID != req.ID {
-			new[i] = v
+			new = append(new, v)
 		}
 	}
 	r.Items = new

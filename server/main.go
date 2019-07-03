@@ -21,7 +21,7 @@ func main() {
 	httpSrv := &http.Server{
 		ReadHeaderTimeout: 5 * time.Second,
 		IdleTimeout:       120 * time.Second,
-		Addr:              ":http",
+		Addr:              ":8080",
 	}
 	httpSrv.Handler = http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
 		if wrappedGrpc.IsGrpcWebRequest(req) {
