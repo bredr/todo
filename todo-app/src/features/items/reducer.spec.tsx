@@ -1,14 +1,16 @@
-import reducer from "./reducer";
-import { setItems, loadingItems, getItems } from "./actions";
-import { Todo } from "../../proto/todo_pb_service";
 import { Pagination } from "../../proto/todo_pb";
+import { Todo } from "../../proto/todo_pb_service";
+import { getItems, loadingItems, setItems } from "./actions";
+import reducer from "./reducer";
 
 describe("reducer", () => {
   describe("loadingItems", () => {
     it("sets loading to true", () => {
-      expect(reducer(undefined, loadingItems())).toEqual(expect.objectContaining({
-        loading: true
-      }));
+      expect(reducer(undefined, loadingItems())).toEqual(
+        expect.objectContaining({
+          loading: true
+        })
+      );
     });
   });
   describe("getItems", () => {
@@ -26,7 +28,9 @@ describe("reducer", () => {
       const payload = {
         methodDescriptor: Todo.GetItems,
         request,
-        onEnd: () => { }
+        onEnd: () => {
+          return;
+        }
       };
       expect(reducer(init, getItems(payload))).toEqual({
         items: [],
@@ -43,26 +47,30 @@ describe("reducer", () => {
         limit: 1,
         offset: 0,
         total: 1,
-        itemsList: [{
-          id: "1",
-          description: "test",
-          due: { seconds: 1563220467, nanos: 0 },
-          created: { seconds: 1563220467, nanos: 0 },
-          hourstocomplete: 1
-        }]
+        itemsList: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            hourstocomplete: 1
+          }
+        ]
       };
       expect(reducer(undefined, setItems(payload))).toEqual({
         loading: false,
         limit: 1,
         offset: 0,
         total: 1,
-        items: [{
-          id: "1",
-          description: "test",
-          due: { seconds: 1563220467, nanos: 0 },
-          created: { seconds: 1563220467, nanos: 0 },
-          hourstocomplete: 1
-        }]
+        items: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            hourstocomplete: 1
+          }
+        ]
       });
     });
     it("replaces old items", () => {
@@ -70,13 +78,15 @@ describe("reducer", () => {
         limit: 1,
         offset: 0,
         total: 1,
-        itemsList: [{
-          id: "1",
-          description: "test",
-          due: { seconds: 1563220467, nanos: 0 },
-          created: { seconds: 1563220467, nanos: 0 },
-          hourstocomplete: 1
-        }]
+        itemsList: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            hourstocomplete: 1
+          }
+        ]
       };
       const init = {
         items: [],
@@ -90,13 +100,15 @@ describe("reducer", () => {
         limit: 1,
         offset: 0,
         total: 1,
-        items: [{
-          id: "1",
-          description: "test",
-          due: { seconds: 1563220467, nanos: 0 },
-          created: { seconds: 1563220467, nanos: 0 },
-          hourstocomplete: 1
-        }]
+        items: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            hourstocomplete: 1
+          }
+        ]
       });
     });
   });

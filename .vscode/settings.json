@@ -1,24 +1,26 @@
 {
-    "go.useLanguageServer": true,
-    "go.buildOnSave": "workspace",
-    "go.alternateTools": {
-        "go-langserver": "gopls",
+  "go.useLanguageServer": true,
+  "go.buildOnSave": "workspace",
+  "go.alternateTools": {
+    "go-langserver": "gopls"
+  },
+  "go.languageServerExperimentalFeatures": {
+    "format": true,
+    "autoComplete": true
+  },
+  "go.formatTool": "gofmt",
+  "[go]": {
+    "editor.snippetSuggestions": "none",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
     },
-    "go.languageServerExperimentalFeatures": {
-        "format": true,
-        "autoComplete": true
-    },
-    "go.formatTool": "gofmt",
-    "[go]": {
-        "editor.snippetSuggestions": "none",
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        },
-        "editor.codeActionsOnSaveTimeout": 3000
-    },
-    "files.eol": "\n",
-    "gopls": {
-        "usePlaceholders": true // add parameter placeholders when completing a function
-    },
+    "editor.codeActionsOnSaveTimeout": 3000
+  },
+  "files.eol": "\n",
+  "gopls": {
+    "usePlaceholders": true // add parameter placeholders when completing a function
+  },
+  "prettier.tslintIntegration": true,
+  "editor.formatOnSave": true
 }
