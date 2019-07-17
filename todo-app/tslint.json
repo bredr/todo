@@ -7,7 +7,8 @@
   ],
   "rules": {
     "prettier": true,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "jsx-key": false
   },
   "linterOptions": {
     "exclude": ["./src/proto/*", "./src/serviceWorker.ts"]

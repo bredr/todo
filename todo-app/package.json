@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@testing-library/react-hooks": "^1.1.0",
+    "@types/react-redux": "^7.1.1",
     "prettier": "1.18.2",
+    "react-test-renderer": "^16.8.6",
     "ts-protoc-gen": "~0.10.0",
     "tslint": "~5.18.0",
     "tslint-react": "~4.0.0"
@@ -25,6 +28,7 @@
     "react-scripts": "3.0.1",
     "redux": "~4.0.1",
     "redux-observable": "~1.1.0",
+    "reselect": "^4.0.0",
     "rxjs": "~6.5.2",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",

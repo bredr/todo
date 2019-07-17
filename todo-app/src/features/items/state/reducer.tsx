@@ -1,9 +1,9 @@
 import produce from "immer";
 import { createReducer } from "typesafe-actions";
-import { Item } from "../../proto/todo_pb";
+import { Item } from "../../../proto/todo_pb";
 import { Actions, getItems, loadingItems, setItems } from "./actions";
 
-interface IState {
+export interface IState {
   readonly total: number;
   readonly limit: number;
   readonly offset: number;

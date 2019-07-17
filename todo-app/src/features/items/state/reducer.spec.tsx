@@ -1,5 +1,5 @@
-import { Pagination } from "../../proto/todo_pb";
-import { Todo } from "../../proto/todo_pb_service";
+import { Pagination } from "../../../proto/todo_pb";
+import { Todo } from "../../../proto/todo_pb_service";
 import { getItems, loadingItems, setItems } from "./actions";
 import reducer from "./reducer";
 
