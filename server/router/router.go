@@ -27,7 +27,7 @@ func (r *Router) GetItem(ctx context.Context, req *pb.ID) (*pb.Item, error) {
 func (r *Router) GetItems(ctx context.Context, req *pb.Pagination) (*pb.Items, error) {
 	log.Printf("GetItems::%v", req)
 	if len(r.Items) == 0 || int(req.Offset) >= len(r.Items) {
-		return nil, nil
+		return &pb.Items{}, nil
 	}
 	end := int(req.Limit + req.Offset)
 	if end > len(r.Items) {

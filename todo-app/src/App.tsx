@@ -3,6 +3,8 @@ import React from "react";
 import "./App.css";
 import { Items } from "./features/items";
 import { NavBar } from "./features/nav";
+import { Pagination } from "./features/pagination";
+import { Toaster } from "./features/toaster";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,6 +27,8 @@ const App: React.FC = () => {
     <div className={classes.root}>
       <NavBar />
       <Items />
+      <Pagination />
+      <Toaster />
     </div>
   );
 };

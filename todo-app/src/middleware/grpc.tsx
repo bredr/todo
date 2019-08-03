@@ -5,7 +5,7 @@ import { createAction } from "typesafe-actions";
 
 const GRPC_WEB_REQUEST = "GRPC_WEB_REQUEST";
 type GRPC_WEB_REQUEST = "GRPC_WEB_REQUEST";
-const defaultHost = "/";
+const defaultHost = "http://localhost:3000";
 
 function isGrpcWebUnaryAction(
   action: Action<any>
@@ -93,7 +93,7 @@ export function newGrpcMiddleware(): Middleware {
     }
 
     grpc.invoke(payload.methodDescriptor, {
-      debug: payload.debug,
+      debug: true,
       host: payload.host || defaultHost,
       metadata: payload.metadata,
       request: payload.request,

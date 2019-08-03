@@ -1,13 +1,14 @@
 package main
 
 import (
+	"log"
+	"net/http"
+	"time"
+
 	pb "github.com/bredr/todo/pb"
 	"github.com/bredr/todo/router"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"google.golang.org/grpc"
-	"log"
-	"net/http"
-	"time"
 )
 
 func main() {
@@ -26,6 +27,7 @@ func main() {
 	httpSrv.Handler = http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
 		if wrappedGrpc.IsGrpcWebRequest(req) {
 			wrappedGrpc.ServeHTTP(resp, req)
+			return
 		}
 		// Fall back to other servers.
 		http.DefaultServeMux.ServeHTTP(resp, req)
