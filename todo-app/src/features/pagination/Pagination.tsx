@@ -1,5 +1,6 @@
 import { grpc } from "@improbable-eng/grpc-web";
 import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
@@ -48,22 +49,26 @@ export const Pagination = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <IconButton
-        aria-label="Before"
-        className={classes.fab}
-        disabled={loading || !hasPrevious}
-      >
-        <NavigateBeforeIcon />
-      </IconButton>
-      <Fab
-        color="primary"
-        aria-label="Next"
-        className={classes.fab}
-        disabled={loading || !hasNext}
-      >
-        <NavigateNextIcon />
-      </Fab>
-    </div>
+    <Grid container={true}>
+      <Grid item={true} xs={6}>
+        <IconButton
+          aria-label="Before"
+          className={classes.fab}
+          disabled={loading || !hasPrevious}
+        >
+          <NavigateBeforeIcon />
+        </IconButton>
+      </Grid>
+      <Grid item={true} xs={6}>
+        <Fab
+          color="primary"
+          aria-label="Next"
+          className={classes.fab}
+          disabled={loading || !hasNext}
+        >
+          <NavigateNextIcon />
+        </Fab>
+      </Grid>
+    </Grid>
   );
 };
