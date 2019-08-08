@@ -31,7 +31,17 @@ const App: React.FC = () => {
   return (
     <div className={classes.root}>
       <NavBar />
-      <Items />
+      <Grid
+        container={true}
+        spacing={2}
+        alignItems="center"
+        justify="center"
+        className={classes.control}
+      >
+        <Grid item={true} xs={6}>
+          <Items />
+        </Grid>
+      </Grid>
       <Grid
         container={true}
         spacing={2}

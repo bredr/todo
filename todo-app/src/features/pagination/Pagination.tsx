@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const getItemsAction = (limit = 10, offset = 0) => {
+export const getItemsAction = (limit = 10, offset = 0) => {
   const request = new PaginationRequest();
   request.setLimit(limit);
   request.setOffset(offset);
   return actions.getItems({
     methodDescriptor: Todo.GetItems,
     request,
-    onStart: () => actions.loadingItems(),
+    onStart: () => actions.loadingItems({ limit, offset }),
     onMessage: res => actions.setItems(res.toObject()),
     onEnd: (code, message) =>
       code === grpc.Code.OK
@@ -43,11 +43,18 @@ export const Pagination = () => {
   const hasNext = useSelector(selectors.hasNext);
   const hasPrevious = useSelector(selectors.hasPrevious);
   const loading = useSelector(selectors.loading);
+  const { limit, offset } = useSelector(selectors.pagination);
 
   useEffect(() => {
     dispatch(getItemsAction());
   }, [dispatch]);
 
+  const handleBefore = () => {
+    dispatch(getItemsAction(10, offset - 10));
+  };
+  const handleNext = () => {
+    dispatch(getItemsAction(10, offset + 10));
+  };
   return (
     <Grid container={true}>
       <Grid item={true} xs={6}>
@@ -55,6 +62,7 @@ export const Pagination = () => {
           aria-label="Before"
           className={classes.fab}
           disabled={loading || !hasPrevious}
+          onClick={handleBefore}
         >
           <NavigateBeforeIcon />
         </IconButton>
@@ -65,6 +73,7 @@ export const Pagination = () => {
           aria-label="Next"
           className={classes.fab}
           disabled={loading || !hasNext}
+          onClick={handleNext}
         >
           <NavigateNextIcon />
         </Fab>

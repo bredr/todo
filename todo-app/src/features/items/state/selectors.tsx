@@ -21,5 +21,9 @@ const hasPrevious = createSelector(
   sliceSelector,
   state => state.offset > 0 && state.total > 0
 );
+const pagination = createSelector(
+  sliceSelector,
+  ({ limit, offset }) => ({ limit, offset })
+);
 
-export default { items, loading, hasNext, hasPrevious };
+export default { items, loading, hasNext, hasPrevious, pagination };

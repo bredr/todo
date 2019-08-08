@@ -6,7 +6,14 @@ export const setItems = createAction("SET_ITEMS", action => {
   return (items: Items.AsObject) => action(items);
 });
 
-export const loadingItems = createAction("LOADING_ITEMS");
+interface IPagination {
+  limit: number;
+  offset: number;
+}
+
+export const loadingItems = createAction("LOADING_ITEMS", action => {
+  return (pagination: IPagination) => action(pagination);
+});
 
 export const getItems = grpcRequest<Pagination, Items>();
 

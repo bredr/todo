@@ -20,17 +20,12 @@ const initState: IState = {
 };
 
 export default createReducer<IState, Actions>(initState)
-  .handleAction(getItems, (state, action) =>
-    produce(state, draft => {
-      draft.items = [];
-      draft.limit = action.payload.request.getLimit();
-      draft.offset = action.payload.request.getOffset();
-      draft.total = 0;
-    })
-  )
-  .handleAction(loadingItems, state =>
+  .handleAction(loadingItems, (state, action) =>
     produce(state, draft => {
       draft.loading = true;
+      draft.items = [];
+      draft.limit = action.payload.limit;
+      draft.offset = action.payload.offset;
     })
   )
   .handleAction(setItems, (state, action) =>

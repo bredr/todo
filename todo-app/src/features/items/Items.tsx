@@ -3,6 +3,8 @@ import List from "@material-ui/core/List";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { useSelector } from "react-redux";
+import { CreateForm } from "../createItem/CreateForm";
+import create from "../createItem/state/selectors";
 import { Item } from "./item/Item";
 import selectors from "./state/selectors";
 
@@ -22,15 +24,17 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Items: React.FC = () => {
   const items = useSelector(selectors.items);
   const loading = useSelector(selectors.loading);
+  const createForm = useSelector(create.createItemOpen);
   const classes = useStyles();
 
   return (
     <div>
+      {createForm && <CreateForm />}
       {loading && <CircularProgress className={classes.progress} />}
       {!loading && items.length > 0 && (
         <List className={classes.root}>
           {items.map(item => (
-            <Item {...item} />
+            <Item {...item} key={item.id} />
           ))}
         </List>
       )}
