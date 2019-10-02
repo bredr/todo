@@ -1,13 +1,15 @@
 import { grpc } from "@improbable-eng/grpc-web";
 import { createStyles, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/styles";
 import { Field, Form, Formik, FormikActions, FormikProps } from "formik";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import React from "react";
 import { useDispatch } from "react-redux";
-import uuid from "uuid/v4";
 import * as Yup from "yup";
 import { Item } from "../../proto/todo_pb";
 import { Todo } from "../../proto/todo_pb_service";
@@ -16,11 +18,11 @@ import * as toaster from "../toaster/state/actions";
 import { FormikDatePicker } from "./DatePicker";
 import actions from "./state/actions";
 
-const HOUR = 3.6e6;
+const DAY = 24 * 3.6e6;
 
 interface IValues {
   description: string;
-  hourstocomplete: number;
+  daystocomplete: number;
   due?: Date | 0;
 }
 
@@ -35,7 +37,7 @@ const upsertItemAction = (values: IValues, id?: string) => {
   request.setCreated(created);
   request.setId(id || "");
   request.setDescription(values.description);
-  request.setHourstocomplete(values.hourstocomplete);
+  request.setDaystocomplete(values.daystocomplete);
   if (values.due) {
     const due = new Timestamp();
     due.setSeconds(values.due.valueOf() / 1000);
@@ -52,12 +54,13 @@ const upsertItemAction = (values: IValues, id?: string) => {
   });
 };
 
-export const CreateForm: React.FC<IProps> = (props = { item: undefined }) => {
+export const CreateForm: React.FC<IProps> = props => {
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const initialValues = {
     description: (props.item && props.item.description) || "",
-    hourstocomplete: (props.item && props.item.hourstocomplete) || 0,
+    daystocomplete: (props.item && props.item.daystocomplete) || 0,
     due:
       props.item &&
       props.item.due &&
@@ -76,33 +79,47 @@ export const CreateForm: React.FC<IProps> = (props = { item: undefined }) => {
     return;
   };
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      render={form}
-      validationSchema={validationSchema}
-      validateOnChange={true}
-    />
+    <Card className={classes.card}>
+      <CardContent>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          render={form}
+          validationSchema={validationSchema}
+          validateOnChange={true}
+        />
+      </CardContent>
+    </Card>
   );
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: "flex",
-      flexWrap: "wrap"
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200
-    }
-  })
-);
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    width: 200
+  },
+  card: {
+    minWidth: 275
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)"
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  }
+});
 
 const form = (props: FormikProps<IValues>) => {
   const {
-    values: { description, due, hourstocomplete },
+    values: { description, due, daystocomplete },
     errors,
     touched,
     handleChange,
@@ -129,12 +146,12 @@ const form = (props: FormikProps<IValues>) => {
         fullWidth={true}
       />
       <TextField
-        id="hourstocomplete"
-        label="Hours to complete"
-        value={hourstocomplete}
-        onChange={change.bind(null, "hourstocomplete")}
-        helperText={touched.hourstocomplete ? errors.hourstocomplete : ""}
-        error={touched.hourstocomplete && Boolean(errors.hourstocomplete)}
+        id="daystocomplete"
+        label="Days to complete"
+        value={daystocomplete}
+        onChange={change.bind(null, "daystocomplete")}
+        helperText={touched.daystocomplete ? errors.daystocomplete : ""}
+        error={touched.daystocomplete && Boolean(errors.daystocomplete)}
         type="number"
         InputLabelProps={{
           shrink: true
@@ -156,13 +173,23 @@ const form = (props: FormikProps<IValues>) => {
 
 const validationSchema = Yup.object<IValues>({
   description: Yup.string().required("Description is required"),
-  hourstocomplete: Yup.number()
-    .required("Hours to complete required")
+  daystocomplete: Yup.number()
+    .required("Days to complete required")
     .min(0),
   due: Yup.date()
     .notRequired()
     .test("achievable", "Must be achievable", function(value) {
-      const { hourstocomplete } = this.parent;
-      return !value || new Date(Date.now() + hourstocomplete * HOUR) < value;
+      const { daystocomplete } = this.parent;
+      const currentDate = new Date(Date.now());
+      const currentTime = currentDate.getHours();
+
+      return (
+        !value ||
+        new Date(
+          (currentTime > 10 ? DAY - currentTime : 0) +
+            new Date(Date.now()).setHours(0, 0, 0, 0).valueOf() +
+            daystocomplete * DAY
+        ) <= value
+      );
     })
 });

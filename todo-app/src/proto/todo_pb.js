@@ -72,7 +72,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         created:
           (f = msg.getCreated()) &&
           google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-        hourstocomplete: jspb.Message.getFieldWithDefault(msg, 5, 0)
+        daystocomplete: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -133,7 +133,7 @@ proto.todo.Item.deserializeBinaryFromReader = function(msg, reader) {
         break;
       case 5:
         var value = /** @type {number} */ (reader.readInt32());
-        msg.setHourstocomplete(value);
+        msg.setDaystocomplete(value);
         break;
       default:
         reader.skipField();
@@ -186,7 +186,7 @@ proto.todo.Item.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
-  f = message.getHourstocomplete();
+  f = message.getDaystocomplete();
   if (f !== 0) {
     writer.writeInt32(5, f);
   }
@@ -277,15 +277,15 @@ proto.todo.Item.prototype.hasCreated = function() {
 };
 
 /**
- * optional int32 HoursToComplete = 5;
+ * optional int32 DaysToComplete = 5;
  * @return {number}
  */
-proto.todo.Item.prototype.getHourstocomplete = function() {
+proto.todo.Item.prototype.getDaystocomplete = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 /** @param {number} value */
-proto.todo.Item.prototype.setHourstocomplete = function(value) {
+proto.todo.Item.prototype.setDaystocomplete = function(value) {
   jspb.Message.setProto3IntField(this, 5, value);
 };
 

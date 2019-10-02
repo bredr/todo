@@ -21,8 +21,8 @@ export class Item extends jspb.Message {
   getCreated(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setCreated(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
-  getHourstocomplete(): number;
-  setHourstocomplete(value: number): void;
+  getDaystocomplete(): number;
+  setDaystocomplete(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Item.AsObject;
@@ -40,7 +40,7 @@ export namespace Item {
     description: string,
     due?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     created?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-    hourstocomplete: number,
+    daystocomplete: number,
   }
 }
 

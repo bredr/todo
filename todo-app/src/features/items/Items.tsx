@@ -1,3 +1,4 @@
+import { Paper } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import List from "@material-ui/core/List";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -15,8 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     root: {
       width: "100%",
-      maxWidth: 360,
       backgroundColor: theme.palette.background.paper
+    },
+    padding: {
+      "margin-bottom": theme.spacing(2)
     }
   })
 );
@@ -32,11 +35,13 @@ export const Items: React.FC = () => {
       {createForm && <CreateForm />}
       {loading && <CircularProgress className={classes.progress} />}
       {!loading && items.length > 0 && (
-        <List className={classes.root}>
+        <div>
           {items.map(item => (
-            <Item {...item} key={item.id} />
+            <div className={classes.padding}>
+              <Item {...item} key={item.id} />
+            </div>
           ))}
-        </List>
+        </div>
       )}
     </div>
   );
