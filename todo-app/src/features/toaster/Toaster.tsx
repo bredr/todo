@@ -7,7 +7,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import ErrorIcon from "@material-ui/icons/Error";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "./state/actions";
 import selectors from "./state/selectors";
@@ -56,6 +56,15 @@ export const Toaster = () => {
 
     dispatch(clearMessage());
   }
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(
+        () => dispatch(clearMessage()),
+        3000 + message.time - Date.now()
+      );
+    }
+  }, [dispatch]);
 
   if (!message) {
     return <div />;

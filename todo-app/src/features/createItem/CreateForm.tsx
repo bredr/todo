@@ -1,5 +1,5 @@
 import { grpc } from "@improbable-eng/grpc-web";
-import { createStyles, Theme } from "@material-ui/core";
+import { createStyles, Grid, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -15,6 +15,7 @@ import { Item } from "../../proto/todo_pb";
 import { Todo } from "../../proto/todo_pb_service";
 import { getItemsAction } from "../pagination/Pagination";
 import * as toaster from "../toaster/state/actions";
+import { CreateClose } from "./CreateClose";
 import { FormikDatePicker } from "./DatePicker";
 import actions from "./state/actions";
 
@@ -23,11 +24,13 @@ const DAY = 24 * 3.6e6;
 interface IValues {
   description: string;
   daystocomplete: number;
+  id?: string;
   due?: Date | 0;
 }
 
 interface IProps {
   item?: Item.AsObject;
+  editing?: boolean;
 }
 
 const upsertItemAction = (values: IValues, id?: string) => {
@@ -49,7 +52,7 @@ const upsertItemAction = (values: IValues, id?: string) => {
     onMessage: () => getItemsAction(),
     onEnd: (code, message) =>
       code === grpc.Code.OK
-        ? toaster.addSuccess(message)
+        ? toaster.addSuccess("Updated")
         : toaster.addError(message)
   });
 };
@@ -61,6 +64,7 @@ export const CreateForm: React.FC<IProps> = props => {
   const initialValues = {
     description: (props.item && props.item.description) || "",
     daystocomplete: (props.item && props.item.daystocomplete) || 0,
+    id: props.item && props.item.id,
     due:
       props.item &&
       props.item.due &&
@@ -119,7 +123,7 @@ const useStyles = makeStyles({
 
 const form = (props: FormikProps<IValues>) => {
   const {
-    values: { description, due, daystocomplete },
+    values: { description, daystocomplete, id },
     errors,
     touched,
     handleChange,
@@ -135,38 +139,51 @@ const form = (props: FormikProps<IValues>) => {
 
   return (
     <Form>
-      <TextField
-        id="description"
-        name="description"
-        helperText={touched.description ? errors.description : ""}
-        error={touched.description && Boolean(errors.description)}
-        label="Description"
-        value={description}
-        onChange={change.bind(null, "description")}
-        fullWidth={true}
-      />
-      <TextField
-        id="daystocomplete"
-        label="Days to complete"
-        value={daystocomplete}
-        onChange={change.bind(null, "daystocomplete")}
-        helperText={touched.daystocomplete ? errors.daystocomplete : ""}
-        error={touched.daystocomplete && Boolean(errors.daystocomplete)}
-        type="number"
-        InputLabelProps={{
-          shrink: true
-        }}
-      />
-      <Field component={FormikDatePicker} name="due" />
-      <Button
-        type="submit"
-        fullWidth={true}
-        variant="outlined"
-        color="primary"
-        disabled={!isValid}
-      >
-        Submit
-      </Button>
+      <Grid container={true} spacing={3}>
+        <Grid item={true} xs={12}>
+          <TextField
+            id="description"
+            name="description"
+            helperText={touched.description ? errors.description : ""}
+            error={touched.description && Boolean(errors.description)}
+            label="Description"
+            value={description}
+            onChange={change.bind(null, "description")}
+            fullWidth={true}
+          />
+        </Grid>
+        <Grid item={true} xs={6}>
+          <TextField
+            id="daystocomplete"
+            label="Days to complete"
+            value={daystocomplete}
+            onChange={change.bind(null, "daystocomplete")}
+            helperText={touched.daystocomplete ? errors.daystocomplete : ""}
+            error={touched.daystocomplete && Boolean(errors.daystocomplete)}
+            type="number"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+        </Grid>
+        <Grid item={true} xs={6}>
+          <Field component={FormikDatePicker} name="due" />
+        </Grid>
+        <Grid item={true} xs={6}>
+          <Button
+            type="submit"
+            variant="outlined"
+            fullWidth={true}
+            color="primary"
+            disabled={!isValid}
+          >
+            Submit
+          </Button>
+        </Grid>
+        <Grid item={true} xs={6}>
+          <CreateClose {...{ id }} />
+        </Grid>
+      </Grid>
     </Form>
   );
 };

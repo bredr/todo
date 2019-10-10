@@ -32,7 +32,7 @@ export const getItemsAction = (limit = 10, offset = 0) => {
     onMessage: res => actions.setItems(res.toObject()),
     onEnd: (code, message) =>
       code === grpc.Code.OK
-        ? toaster.addSuccess(message)
+        ? toaster.addSuccess("Updated")
         : toaster.addError(message)
   });
 };

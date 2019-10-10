@@ -1,10 +1,10 @@
 import { ActionType, createAction } from "typesafe-actions";
 
 export const addError = createAction("ADD_ERROR", action => {
-  return (message: string) => action(message);
+  return (message: string) => action({ message, time: Date.now() });
 });
 export const addSuccess = createAction("ADD_SUCCESS", action => {
-  return (message: string) => action(message);
+  return (message: string) => action({ message, time: Date.now() });
 });
 export const clearMessage = createAction("REMOVE_NOTIFICATION");
 

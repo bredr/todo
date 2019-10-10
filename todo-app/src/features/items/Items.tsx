@@ -32,13 +32,21 @@ export const Items: React.FC = () => {
 
   return (
     <div>
-      {createForm && <CreateForm />}
+      {createForm && (
+        <div className={classes.padding}>
+          <CreateForm />
+        </div>
+      )}
       {loading && <CircularProgress className={classes.progress} />}
       {!loading && items.length > 0 && (
         <div>
           {items.map(item => (
             <div className={classes.padding}>
-              <Item {...item} key={item.id} />
+              {item.edit ? (
+                <CreateForm item={item} />
+              ) : (
+                <Item {...item} key={item.id} />
+              )}
             </div>
           ))}
         </div>

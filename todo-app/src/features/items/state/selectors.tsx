@@ -26,4 +26,9 @@ const pagination = createSelector(
   ({ limit, offset }) => ({ limit, offset })
 );
 
-export default { items, loading, hasNext, hasPrevious, pagination };
+const editing = createSelector(
+  sliceSelector,
+  state => state.items.filter(x => x.edit).map(x => x.id)
+);
+
+export default { items, loading, hasNext, hasPrevious, pagination, editing };
