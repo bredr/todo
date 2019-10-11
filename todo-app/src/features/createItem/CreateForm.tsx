@@ -188,7 +188,7 @@ const form = (props: FormikProps<IValues>) => {
   );
 };
 
-const validationSchema = Yup.object<IValues>({
+export const validationSchema = Yup.object<IValues>().shape({
   description: Yup.string().required("Description is required"),
   daystocomplete: Yup.number()
     .required("Days to complete required")

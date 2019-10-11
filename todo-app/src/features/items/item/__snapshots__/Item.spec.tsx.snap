@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item renders 1`] = `
+<div
+  class="MuiPaper-root MuiPaper-elevation1 MuiCard-root makeStyles-card-2 MuiPaper-rounded"
+>
+  <div
+    class="MuiCardContent-root"
+  >
+    <p
+      class="MuiTypography-root makeStyles-title-4 MuiTypography-body1 MuiTypography-colorTextSecondary MuiTypography-gutterBottom"
+    >
+      d
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body2"
+    >
+      Days to complete: 
+      1
+      <br />
+      Due:1/12/1970
+    </p>
+  </div>
+  <div
+    class="MuiCardActions-root MuiCardActions-spacing"
+  >
+    <button
+      aria-label="edit"
+      class="MuiButtonBase-root MuiButton-root makeStyles-fab-1 MuiButton-text MuiButton-sizeSmall"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Edit
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      aria-label="delete"
+      class="MuiButtonBase-root MuiFab-root makeStyles-fab-1 MuiFab-sizeSmall"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiFab-label"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+          />
+        </svg>
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</div>
+`;

@@ -1,6 +1,5 @@
 import produce from "immer";
 import { createReducer } from "typesafe-actions";
-import items from "..";
 import { Item } from "../../../proto/todo_pb";
 import {
   Actions,
@@ -57,6 +56,14 @@ export default createReducer<IState, Actions>(initState)
       draft.items = state.items.map(item =>
         item.id === action.payload ? { ...item, edit: true } : item
       );
+    })
+  )
+  .handleAction(getItems, (state, action) =>
+    produce(state, draft => {
+      draft.loading = true;
+      draft.items = [];
+      draft.limit = action.payload.request.getLimit();
+      draft.offset = action.payload.request.getOffset();
     })
   )
   .handleAction(cancelEditItem, (state, action) =>

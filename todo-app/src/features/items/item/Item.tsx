@@ -82,7 +82,12 @@ export const Item: React.FC<ItemType.AsObject> = props => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onEdit} className={classes.fab}>
+        <Button
+          aria-label="edit"
+          size="small"
+          onClick={onEdit}
+          className={classes.fab}
+        >
           Edit
         </Button>
         <Fab

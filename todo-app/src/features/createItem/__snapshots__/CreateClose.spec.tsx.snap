@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateClose renders 1`] = `
+<button
+  aria-label="close"
+  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-fullWidth"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label"
+  >
+    Cancel
+  </span>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</button>
+`;

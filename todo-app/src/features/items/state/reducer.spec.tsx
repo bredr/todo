@@ -1,12 +1,20 @@
 import { Pagination } from "../../../proto/todo_pb";
 import { Todo } from "../../../proto/todo_pb_service";
-import { getItems, loadingItems, setItems } from "./actions";
+import {
+  cancelEditItem,
+  editItem,
+  getItems,
+  loadingItems,
+  setItems
+} from "./actions";
 import reducer from "./reducer";
 
 describe("reducer", () => {
   describe("loadingItems", () => {
     it("sets loading to true", () => {
-      expect(reducer(undefined, loadingItems())).toEqual(
+      expect(
+        reducer(undefined, loadingItems({ limit: 10, offset: 0 }))
+      ).toEqual(
         expect.objectContaining({
           loading: true
         })
@@ -41,6 +49,86 @@ describe("reducer", () => {
       });
     });
   });
+  describe("editItem", () => {
+    it("sets item to edit", () => {
+      expect(
+        reducer(
+          {
+            loading: false,
+            limit: 1,
+            offset: 0,
+            total: 1,
+            items: [
+              {
+                id: "1",
+                description: "test",
+                due: { seconds: 1563220467, nanos: 0 },
+                created: { seconds: 1563220467, nanos: 0 },
+                daystocomplete: 1,
+                edit: false
+              }
+            ]
+          },
+          editItem("1")
+        )
+      ).toEqual({
+        loading: false,
+        limit: 1,
+        offset: 0,
+        total: 1,
+        items: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            daystocomplete: 1,
+            edit: true
+          }
+        ]
+      });
+    });
+  });
+  describe("cancelEditItem", () => {
+    it("unsets item to edit", () => {
+      expect(
+        reducer(
+          {
+            loading: false,
+            limit: 1,
+            offset: 0,
+            total: 1,
+            items: [
+              {
+                id: "1",
+                description: "test",
+                due: { seconds: 1563220467, nanos: 0 },
+                created: { seconds: 1563220467, nanos: 0 },
+                daystocomplete: 1,
+                edit: true
+              }
+            ]
+          },
+          cancelEditItem("1")
+        )
+      ).toEqual({
+        loading: false,
+        limit: 1,
+        offset: 0,
+        total: 1,
+        items: [
+          {
+            id: "1",
+            description: "test",
+            due: { seconds: 1563220467, nanos: 0 },
+            created: { seconds: 1563220467, nanos: 0 },
+            daystocomplete: 1,
+            edit: false
+          }
+        ]
+      });
+    });
+  });
   describe("setItems", () => {
     it("sets initial items", () => {
       const payload = {
@@ -53,7 +141,7 @@ describe("reducer", () => {
             description: "test",
             due: { seconds: 1563220467, nanos: 0 },
             created: { seconds: 1563220467, nanos: 0 },
-            hourstocomplete: 1
+            daystocomplete: 1
           }
         ]
       };
@@ -68,7 +156,8 @@ describe("reducer", () => {
             description: "test",
             due: { seconds: 1563220467, nanos: 0 },
             created: { seconds: 1563220467, nanos: 0 },
-            hourstocomplete: 1
+            daystocomplete: 1,
+            edit: false
           }
         ]
       });
@@ -84,7 +173,7 @@ describe("reducer", () => {
             description: "test",
             due: { seconds: 1563220467, nanos: 0 },
             created: { seconds: 1563220467, nanos: 0 },
-            hourstocomplete: 1
+            daystocomplete: 1
           }
         ]
       };
@@ -106,7 +195,8 @@ describe("reducer", () => {
             description: "test",
             due: { seconds: 1563220467, nanos: 0 },
             created: { seconds: 1563220467, nanos: 0 },
-            hourstocomplete: 1
+            daystocomplete: 1,
+            edit: false
           }
         ]
       });

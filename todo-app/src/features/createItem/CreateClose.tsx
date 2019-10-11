@@ -22,6 +22,7 @@ export const CreateClose: React.FC<IProps> = props => {
     <Button
       variant="outlined"
       color="primary"
+      aria-label="close"
       fullWidth={true}
       disabled={!isOpen && !id}
       onClick={onClick}

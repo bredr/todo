@@ -64,7 +64,7 @@ export const Toaster = () => {
         3000 + message.time - Date.now()
       );
     }
-  }, [dispatch]);
+  }, [message]);
 
   if (!message) {
     return <div />;
@@ -79,6 +79,7 @@ export const Toaster = () => {
           vertical: "bottom",
           horizontal: "left"
         }}
+        data-testid="snackbar"
         open={!!message}
         autoHideDuration={6000}
         onClose={handleClose}
@@ -94,6 +95,7 @@ export const Toaster = () => {
           }
           action={[
             <IconButton
+              data-testid="close"
               key="close"
               aria-label="Close"
               color="inherit"
