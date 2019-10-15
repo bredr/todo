@@ -58,14 +58,6 @@ export default createReducer<IState, Actions>(initState)
       );
     })
   )
-  .handleAction(getItems, (state, action) =>
-    produce(state, draft => {
-      draft.loading = true;
-      draft.items = [];
-      draft.limit = action.payload.request.getLimit();
-      draft.offset = action.payload.request.getOffset();
-    })
-  )
   .handleAction(cancelEditItem, (state, action) =>
     produce(state, draft => {
       draft.items = state.items.map(item =>

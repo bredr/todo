@@ -1,12 +1,4 @@
-import { Pagination } from "../../../proto/todo_pb";
-import { Todo } from "../../../proto/todo_pb_service";
-import {
-  cancelEditItem,
-  editItem,
-  getItems,
-  loadingItems,
-  setItems
-} from "./actions";
+import { cancelEditItem, editItem, loadingItems, setItems } from "./actions";
 import reducer from "./reducer";
 
 describe("reducer", () => {
@@ -19,34 +11,6 @@ describe("reducer", () => {
           loading: true
         })
       );
-    });
-  });
-  describe("getItems", () => {
-    it("resets state of items", () => {
-      const init = {
-        items: [],
-        loading: true,
-        total: 0,
-        limit: 10,
-        offset: 20
-      };
-      const request = new Pagination();
-      request.setOffset(100);
-      request.setLimit(42);
-      const payload = {
-        methodDescriptor: Todo.GetItems,
-        request,
-        onEnd: () => {
-          return;
-        }
-      };
-      expect(reducer(init, getItems(payload))).toEqual({
-        items: [],
-        loading: true,
-        total: 0,
-        limit: 42,
-        offset: 100
-      });
     });
   });
   describe("editItem", () => {
